@@ -83,6 +83,8 @@ def load_ohlcv(symbol: str, curr_date: str) -> pd.DataFrame:
             auto_adjust=True,
         ))
         data = data.reset_index()
+        if data.empty:
+            raise ValueError(f"yf.download returned empty data for {symbol}")
         data.to_csv(data_file, index=False, encoding="utf-8")
 
     data = _clean_dataframe(data)

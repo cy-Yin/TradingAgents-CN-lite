@@ -206,6 +206,12 @@ _, decision = ta.propagate("NVDA", "2026-01-15")
 print(decision)
 ```
 
+`main.py` also saves the full analysis as a structured markdown report and generates investment-bank-grade HTML reports (English + Chinese) to the `reports/` directory. The HTML reports are produced by an LLM summarizing the markdown into a clean, visual layout — not a simple markdown-to-HTML conversion. Run it directly:
+
+```bash
+uv run python main.py
+```
+
 You can also adjust the default configuration to set your own choice of LLMs, debate rounds, etc.
 
 ```python
