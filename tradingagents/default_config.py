@@ -117,6 +117,20 @@ DEFAULT_CONFIG = _apply_env_overrides({
         ".L":   "^FTSE",    # London (FTSE 100)
         ".TO":  "^GSPTSE",  # Toronto (TSX Composite)
         ".AX":  "^AXJO",    # Australia (ASX 200)
+        ".SS":  "000300",   # Shanghai A-share -> CSI 300 index
+        ".SZ":  "000300",   # Shenzhen A-share -> CSI 300 (same as .SS)
+        ".BJ":  "899050",   # Beijing -> BSE 50 index
         "":     "SPY",      # default for US-listed tickers (no suffix)
     },
+    # Market context: set automatically by propagate() based on ticker detection.
+    # "cn_a" forces akshare for all data; None uses normal vendor routing.
+    "active_market": None,
+    # Chinese macro news queries for A-share analysis (reserved for future use)
+    "cn_global_news_queries": [
+        "中国央行 货币政策 利率",
+        "A股 市场分析 大盘走势",
+        "中国经济 GDP 通胀",
+        "行业政策 监管 证监会",
+        "国际贸易 地缘政治",
+    ],
 })

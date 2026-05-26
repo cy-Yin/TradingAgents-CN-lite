@@ -11,6 +11,8 @@ import yfinance as yf
 
 logger = logging.getLogger(__name__)
 
+from tradingagents.dataflows.market_detect import is_a_share
+
 from langgraph.prebuilt import ToolNode
 
 from tradingagents.llm_clients import create_llm_client
@@ -205,6 +207,10 @@ class TradingAgentsGraph:
         explicit = self.config.get("benchmark_ticker")
         if explicit:
             return explicit
+        # Normalize A-share tickers to suffixed form so benchmark_map matches
+        if is_a_share(ticker):
+            from tradingagents.dataflows.market_detect import normalize_a_share_ticker
+            ticker = normalize_a_share_ticker(ticker)
         benchmark_map = self.config.get("benchmark_map", {})
         ticker_upper = ticker.upper()
         for suffix, benchmark in benchmark_map.items():
@@ -223,6 +229,9 @@ class TradingAgentsGraph:
         actual_holding_days)`` or ``(None, None, None)`` if price data is
         unavailable (too recent, delisted, or network error).
         """
+        if is_a_share(ticker) or is_a_share(benchmark):
+            return self._fetch_returns_cn(ticker, trade_date, holding_days, benchmark)
+
         try:
             start = datetime.strptime(trade_date, "%Y-%m-%d")
             end = start + timedelta(days=holding_days + 7)  # buffer for weekends/holidays
@@ -248,6 +257,47 @@ class TradingAgentsGraph:
         except Exception as e:
             logger.warning(
                 "Could not resolve outcome for %s on %s vs %s (will retry next run): %s",
+                ticker, trade_date, benchmark, e,
+            )
+            return None, None, None
+
+    def _fetch_returns_cn(
+        self, ticker: str, trade_date: str, holding_days: int = 5,
+        benchmark: str = "000300",
+    ) -> Tuple[Optional[float], Optional[float], Optional[int]]:
+        """Fetch A-share returns using baostock for both stock and benchmark."""
+        try:
+            from tradingagents.dataflows.baostock_data import _query_kline, _to_bs_code, _to_bs_index_code
+
+            start = datetime.strptime(trade_date, "%Y-%m-%d")
+            end = start + timedelta(days=holding_days + 7)
+            start_str = trade_date
+            end_str = end.strftime("%Y-%m-%d")
+
+            bs_code = _to_bs_code(ticker)
+            stock_df = _query_kline(bs_code, start_str, end_str)
+
+            bs_bench = _to_bs_index_code(benchmark)
+            bench_df = _query_kline(bs_bench, start_str, end_str)
+
+            if stock_df.empty or bench_df.empty:
+                return None, None, None
+
+            stock_close = stock_df['Close'].values
+            bench_close = bench_df['Close'].values
+
+            actual_days = min(holding_days, len(stock_close) - 1, len(bench_close) - 1)
+            if actual_days < 1:
+                return None, None, None
+
+            raw = float((stock_close[actual_days] - stock_close[0]) / stock_close[0])
+            bench_ret = float((bench_close[actual_days] - bench_close[0]) / bench_close[0])
+            alpha = raw - bench_ret
+            return raw, alpha, actual_days
+
+        except Exception as e:
+            logger.warning(
+                "Could not resolve A-share outcome for %s on %s vs %s: %s",
                 ticker, trade_date, benchmark, e,
             )
             return None, None, None
@@ -303,6 +353,14 @@ class TradingAgentsGraph:
         successful node on a subsequent invocation with the same ticker+date.
         """
         self.ticker = company_name
+
+        # Set market context so route_to_vendor() can dispatch A-shares to akshare
+        if is_a_share(company_name):
+            self.config["active_market"] = "cn_a"
+        else:
+            self.config["active_market"] = None
+        # Sync to global config (get_config() returns deepcopy, so mutation above doesn't propagate)
+        set_config({"active_market": self.config["active_market"]})
 
         # Resolve any pending memory-log entries for this ticker before the pipeline runs.
         self._resolve_pending_entries(company_name)

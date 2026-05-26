@@ -12,7 +12,7 @@ from tradingagents.llm_clients.model_catalog import get_model_options
 
 console = Console()
 
-TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK"
+TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK, 600519.SS, 000001.SZ"
 
 ANALYST_ORDER = [
     ("Market Analyst", AnalystType.MARKET),
@@ -53,6 +53,9 @@ def detect_asset_type(ticker: str) -> AssetType:
     normalized_ticker = ticker.strip().upper()
     if normalized_ticker.endswith(CRYPTO_SUFFIXES):
         return AssetType.CRYPTO
+    from tradingagents.dataflows.market_detect import is_a_share
+    if is_a_share(normalized_ticker):
+        return AssetType.A_SHARE
     return AssetType.STOCK
 
 

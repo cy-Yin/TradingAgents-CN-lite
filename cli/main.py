@@ -514,6 +514,8 @@ def get_user_selections():
     console.print(
         f"[green]Detected asset type:[/green] {asset_type.value}"
     )
+    if asset_type.value == "a_share":
+        console.print("[yellow]A股检测到 — 建议输出语言选择 Chinese[/yellow]")
 
     # Step 2: Analysis date
     default_date = datetime.datetime.now().strftime("%Y-%m-%d")
