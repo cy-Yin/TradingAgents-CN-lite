@@ -148,7 +148,6 @@ activemq-data/
 *.sage.py
 
 # Environments
-.env
 .envrc
 .venv
 env/
@@ -219,4 +218,5 @@ __marimo__/
 **/data_cache/
 
 # Generated reports
-reports/
+reports/*
+!reports/example_*.png

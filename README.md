@@ -1,282 +1,240 @@
-<p align="center">
-  <img src="assets/TauricResearch.png" style="width: 60%; height: auto;">
-</p>
+# TradingAgents-CN-lite
 
-<div align="center" style="line-height: 1;">
-  <a href="https://arxiv.org/abs/2412.20138" target="_blank"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2412.20138-B31B1B?logo=arxiv"/></a>
-  <a href="https://discord.com/invite/hk9PGKShPK" target="_blank"><img alt="Discord" src="https://img.shields.io/badge/Discord-TradingResearch-7289da?logo=discord&logoColor=white&color=7289da"/></a>
-  <a href="./assets/wechat.png" target="_blank"><img alt="WeChat" src="https://img.shields.io/badge/WeChat-TauricResearch-brightgreen?logo=wechat&logoColor=white"/></a>
-  <a href="https://x.com/TauricResearch" target="_blank"><img alt="X Follow" src="https://img.shields.io/badge/X-TauricResearch-white?logo=x&logoColor=white"/></a>
-  <br>
-  <a href="https://github.com/TauricResearch/" target="_blank"><img alt="Community" src="https://img.shields.io/badge/Join_GitHub_Community-TauricResearch-14C290?logo=discourse"/></a>
-</div>
+**Lightweight Multi-Agent Trading Framework** (A-share, HK, US, etc.)
 
-<div align="center">
-  <!-- Keep these links. Translations will automatically update with the README. -->
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=de">Deutsch</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=es">Español</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=fr">français</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=ja">日本語</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=ko">한국어</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=pt">Português</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=ru">Русский</a> | 
-  <a href="https://www.readme-i18n.com/TauricResearch/TradingAgents?lang=zh">中文</a>
-</div>
+[![License](https://img.shields.io/github/license/cy-Yin/TradingAgents-CN-lite)](LICENSE) [![Python](https://img.shields.io/badge/python-3.13-blue?logo=python&logoColor=white)](https://www.python.org/) [![Last commit](https://img.shields.io/github/last-commit/cy-Yin/TradingAgents-CN-lite)](https://github.com/cy-Yin/TradingAgents-CN-lite/commits/main)
+
+[English](README.md) | [中文](README_cn.md)
 
 ---
 
-# TradingAgents: Multi-Agents LLM Financial Trading Framework
+A lightweight fork of [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents), adding **A-share market data** (BaoStock + AkShare + EastMoney Guba) while keeping the original CLI architecture intact. Inspired by [hsliuping/TradingAgents-CN](https://github.com/hsliuping/TradingAgents-CN).
 
-## News
-- [2026-05] **TradingAgents v0.2.5** released with the grounded Sentiment Analyst, GPT-5.5 etc. model coverage, Qwen/GLM/MiniMax dual-region support, `TRADINGAGENTS_*` env-var configurability with API-key auto-detection, remote Ollama support, non-US alpha benchmarks, and ticker path-traversal hardening. See [CHANGELOG.md](CHANGELOG.md) for the full list.
-- [2026-04] **TradingAgents v0.2.4** released with structured-output agents (Research Manager, Trader, Portfolio Manager), LangGraph checkpoint resume, persistent decision log, DeepSeek/Qwen/GLM/Azure provider support, Docker, and a Windows UTF-8 encoding fix.
-- [2026-03] **TradingAgents v0.2.3** released with multi-language support, GPT-5.4 family models, unified model catalog, backtesting date fidelity, and proxy support.
-- [2026-03] **TradingAgents v0.2.2** released with GPT-5.4/Gemini 3.1/Claude 4.6 model coverage, five-tier rating scale, OpenAI Responses API, Anthropic effort control, and cross-platform stability.
-- [2026-02] **TradingAgents v0.2.0** released with multi-provider LLM support (GPT-5.x, Gemini 3.x, Claude 4.x, Grok 4.x) and improved system architecture.
-- [2026-01] **Trading-R1** [Technical Report](https://arxiv.org/abs/2509.11420) released, with [Terminal](https://github.com/TauricResearch/Trading-R1) expected to land soon.
+> If you need a full-stack deployment with Web UI, database, and enterprise features, see [TradingAgents-CN](https://github.com/hsliuping/TradingAgents-CN).
 
-<div align="center">
-<a href="https://www.star-history.com/#TauricResearch/TradingAgents&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=TauricResearch/TradingAgents&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=TauricResearch/TradingAgents&type=Date" />
-   <img alt="TradingAgents Star History" src="https://api.star-history.com/svg?repos=TauricResearch/TradingAgents&type=Date" style="width: 80%; height: auto;" />
- </picture>
-</a>
-</div>
+> [!WARNING]
+> This project is for **research and educational purposes only**. It does not constitute investment advice. Trading performance depends on many factors including model choice, market conditions, and data quality. Use at your own risk.
 
-> 🎉 **TradingAgents** officially released! We have received numerous inquiries about the work, and we would like to express our thanks for the enthusiasm in our community.
->
-> So we decided to fully open-source the framework. Looking forward to building impactful projects with you!
+## Acknowledgments
 
-<div align="center">
+| Project | Description |
+|---------|-------------|
+| [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents) | The original multi-agent LLM trading framework |
+| [hsliuping/TradingAgents-CN](https://github.com/hsliuping/TradingAgents-CN) | Full Chinese enhanced version with Web UI and enterprise features |
 
-🚀 [TradingAgents](#tradingagents-framework) | ⚡ [Installation & CLI](#installation-and-cli) | 🎬 [Demo](https://www.youtube.com/watch?v=90gr5lwjIho) | 📦 [Package Usage](#tradingagents-package) | 🤝 [Contributing](#contributing) | 📄 [Citation](#citation)
+## Overview
 
-</div>
+### What It Does
 
-## TradingAgents Framework
+You give it a **stock ticker** and a **date**. It runs a team of AI agents that analyze the stock from every angle — fundamentals, news, sentiment, technicals — then debate each other to reach a trading decision. The output is a **BUY / SELL / HOLD** recommendation with a full analysis report (Markdown + HTML in English & Chinese).
 
-TradingAgents is a multi-agent trading framework that mirrors the dynamics of real-world trading firms. By deploying specialized LLM-powered agents: from fundamental analysts, sentiment experts, and technical analysts, to trader, risk management team, the platform collaboratively evaluates market conditions and informs trading decisions. Moreover, these agents engage in dynamic discussions to pinpoint the optimal strategy.
+**Supported markets:**
 
-<p align="center">
-  <img src="assets/schema.png" style="width: 100%; height: auto;">
-</p>
+- **A-share** — Shanghai (60xxxx), Shenzhen (00xxxx/30xxxx), Beijing (8xxxxx). Stock price and technical indicators from [BaoStock](https://github.com/jealous/stockstats); fundamentals, financial statements, and news from [AkShare](https://github.com/akfamily/akshare); retail sentiment from EastMoney Guba; macro news from CCTV Finance. Benchmark: CSI 300 / BSE 50.
+- **Hong Kong** — via yfinance (e.g. `0700.HK`). Benchmark: Hang Seng Index.
+- **US / Global** — via yfinance or Alpha Vantage (e.g. `NVDA`, `AAPL`). Sentiment from Reddit + StockTwits. Benchmark: SPY.
 
-> TradingAgents framework is designed for research purposes. Trading performance may vary based on many factors, including the chosen backbone language models, model temperature, trading periods, the quality of data, and other non-deterministic factors. [It is not intended as financial, investment, or trading advice.](https://tauric.ai/disclaimer/)
+The system auto-detects the market from the ticker format — no manual config.
 
-Our framework decomposes complex trading tasks into specialized roles. This ensures the system achieves a robust, scalable approach to market analysis and decision-making.
+### What's Different
 
-### Analyst Team
-- Fundamentals Analyst: Evaluates company financials and performance metrics, identifying intrinsic values and potential red flags.
-- Sentiment Analyst: Aggregates news headlines, StockTwits, and Reddit chatter into a single sentiment read to gauge short-term market mood.
-- News Analyst: Monitors global news and macroeconomic indicators, interpreting the impact of events on market conditions.
-- Technical Analyst: Utilizes technical indicators (like MACD and RSI) to detect trading patterns and forecast price movements.
+| Feature | [TradingAgents](https://github.com/TauricResearch/TradingAgents) (Original) | [TradingAgents-CN](https://github.com/hsliuping/TradingAgents-CN) | This Project |
+|---------|--------|------|------|
+| A-share price/indicators (BaoStock) | -- | Yes | Yes |
+| A-share fundamentals/financials (AkShare) | -- | Yes | Yes |
+| A-share news (AkShare) | -- | Yes | Yes |
+| A-share retail sentiment (EastMoney Guba) | -- | Yes | Yes |
+| A-share macro news (CCTV Finance) | -- | Yes | Yes |
+| Chinese LLM providers | Yes (v0.2.4+) | Yes | Yes |
+| US/HK/Global markets | Yes | Yes | Yes |
+| CLI interface | Yes | -- | Yes |
+| Web UI (Vue + FastAPI) | -- | Yes | -- |
+| MongoDB / Redis | -- | Yes | -- |
+| Docker deployment | Yes | Yes | -- |
+| User auth & roles | -- | Yes | -- |
 
-<p align="center">
-  <img src="assets/analyst.png" width="100%" style="display: inline-block; margin: 0 2%;">
-</p>
+> [!NOTE]
+> **Why "lite"?** TradingAgents-CN is a full product — Web UI, MongoDB, Redis, Docker, user auth, all included. This project is just the core engine + A-share data. No web layer, no database, no containers.
 
-### Researcher Team
-- Comprises both bullish and bearish researchers who critically assess the insights provided by the Analyst Team. Through structured debates, they balance potential gains against inherent risks.
+### How It Works
 
 <p align="center">
-  <img src="assets/researcher.png" width="70%" style="display: inline-block; margin: 0 2%;">
+  <img src="assets/schema.png" width="100%">
 </p>
 
-### Trader Agent
-- Composes reports from the analysts and researchers to make informed trading decisions. It determines the timing and magnitude of trades based on comprehensive market insights.
+> **Input:** stock ticker + date
+> **Output:** BUY / SELL / HOLD + full analysis report (Markdown + HTML in English & Chinese)
+
+#### Stage 1 — Analysis
+
+Four specialist agents analyze the stock **in parallel**, each from a different angle:
+
+| Agent | What it does | Data sources |
+|-------|-------------|-------------|
+| 📊 Fundamentals | Financial statements, balance sheets, cash flow | AkShare / yfinance |
+| 💬 Sentiment | Social media & forum mood | EastMoney Guba / Reddit / StockTwits |
+| 📰 News | Macro & company-specific news | CCTV Finance / yfinance |
+| 📈 Technical | MACD, RSI, Bollinger Bands, etc. | BaoStock / yfinance |
+
+#### Stage 2 — Debate
+
+🐂 **Bull Researcher** argues FOR the stock.
+🐻 **Bear Researcher** argues AGAINST.
+
+They challenge each other's reasoning over **N rounds** until a winner emerges.
 
 <p align="center">
-  <img src="assets/trader.png" width="70%" style="display: inline-block; margin: 0 2%;">
+  <img src="assets/researcher.png" width="70%">
 </p>
 
-### Risk Management and Portfolio Manager
-- Continuously evaluates portfolio risk by assessing market volatility, liquidity, and other risk factors. The risk management team evaluates and adjusts trading strategies, providing assessment reports to the Portfolio Manager for final decision.
-- The Portfolio Manager approves/rejects the transaction proposal. If approved, the order will be sent to the simulated exchange and executed.
+#### Stage 3 — Decision
 
-<p align="center">
-  <img src="assets/risk.png" width="70%" style="display: inline-block; margin: 0 2%;">
-</p>
+🧑‍💼 **Research Manager** synthesizes the debate into a unified report.
+🤵 **Trader** makes the initial trading call.
 
-## Installation and CLI
+#### Stage 4 — Risk Review
 
-### Installation
+Three risk analysts debate the trade from different perspectives:
 
-Clone TradingAgents:
+| 🔴 Aggressive | 🟡 Conservative | ⚪ Neutral |
+|:---:|:---:|:---:|
+| High risk tolerance | Risk-averse | Balanced view |
+
+#### Stage 5 — Final Call
+
+👑 **Portfolio Manager** makes the final **BUY / SELL / HOLD** decision.
+📝 **Report Generator** produces structured Markdown + designed HTML reports.
+
+## Quick Start
+
+### 1. Install
+
 ```bash
-git clone https://github.com/TauricResearch/TradingAgents.git
-cd TradingAgents
+git clone https://github.com/cy-Yin/TradingAgents-CN-lite.git
+cd TradingAgents-CN-lite
 ```
 
-Create a virtual environment in any of your favorite environment managers:
+<details open>
+<summary><b>uv</b> (recommended)</summary>
+
+```bash
+# Install uv (pick one)
+pip install uv           # via pip
+brew install uv          # via Homebrew (macOS)
+curl -LsSf https://astral.sh/uv/install.sh | sh  # standalone installer
+
+# Create venv and install
+uv venv -p 3.13
+uv pip install .
+```
+</details>
+
+<details>
+<summary><b>conda</b></summary>
+
 ```bash
 conda create -n tradingagents python=3.13
 conda activate tradingagents
-```
-
-Install the package and its dependencies:
-```bash
 pip install .
 ```
+</details>
 
-### Docker
-
-Alternatively, run with Docker:
-```bash
-cp .env.example .env  # add your API keys
-docker compose run --rm tradingagents
-```
-
-For local models with Ollama:
-```bash
-docker compose --profile ollama run --rm tradingagents-ollama
-```
-
-### Required APIs
-
-TradingAgents supports multiple LLM providers. Set the API key for your chosen provider:
+<details>
+<summary><b>pyenv</b></summary>
 
 ```bash
-export OPENAI_API_KEY=...          # OpenAI (GPT)
-export GOOGLE_API_KEY=...          # Google (Gemini)
-export ANTHROPIC_API_KEY=...       # Anthropic (Claude)
-export XAI_API_KEY=...             # xAI (Grok)
-export DEEPSEEK_API_KEY=...        # DeepSeek
-export DASHSCOPE_API_KEY=...       # Qwen — International (dashscope-intl.aliyuncs.com)
-export DASHSCOPE_CN_API_KEY=...    # Qwen — China (dashscope.aliyuncs.com)
-export ZHIPU_API_KEY=...           # GLM via Z.AI (international)
-export ZHIPU_CN_API_KEY=...        # GLM via BigModel (China, open.bigmodel.cn)
-export MINIMAX_API_KEY=...         # MiniMax — Global (api.minimax.io, M2.x, 204K ctx)
-export MINIMAX_CN_API_KEY=...      # MiniMax — China (api.minimaxi.com, M2.x, 204K ctx)
-export OPENROUTER_API_KEY=...      # OpenRouter
-export ALPHA_VANTAGE_API_KEY=...   # Alpha Vantage
+pyenv install 3.13
+pyenv virtualenv 3.13 tradingagents
+pyenv activate tradingagents
+pip install .
 ```
+</details>
 
-For enterprise providers (e.g. Azure OpenAI, AWS Bedrock), copy `.env.enterprise.example` to `.env.enterprise` and fill in your credentials.
+### 2. Configure
 
-For local models, configure Ollama with `llm_provider: "ollama"`. The default endpoint is `http://localhost:11434/v1`; set `OLLAMA_BASE_URL` to point at a remote `ollama-serve`. Pull models with `ollama pull <name>`, and pick "Custom model ID" in the CLI for any model not listed by default.
+Open `.env` and fill in the following:
 
-Alternatively, copy `.env.example` to `.env` and fill in your keys:
+**① API Key** — set one. Supports OpenAI, DeepSeek, Qwen, GLM, MiniMax, Claude, Gemini, Grok, Xiaomi Mimo, Ollama (local), and more. See `.env.example` for the full list.
+
+<details>
+<summary><b>Full provider list</b></summary>
+
+| Provider | Env Variable | Models |
+|----------|-------------|--------|
+| OpenAI | `OPENAI_API_KEY` | GPT-5.5, GPT-5.4, GPT-5.2, GPT-4.1 |
+| DeepSeek | `DEEPSEEK_API_KEY` | V4 Pro, V4 Flash, V3.2 |
+| Qwen (International) | `DASHSCOPE_API_KEY` | Qwen 3.6 Plus/Flash, Qwen 3.5 |
+| Qwen (China) | `DASHSCOPE_CN_API_KEY` | Same models, China endpoint |
+| GLM (International) | `ZHIPU_API_KEY` | GLM-5.1, GLM-5, GLM-5-Turbo |
+| GLM (China) | `ZHIPU_CN_API_KEY` | Same models, BigModel.cn |
+| MiniMax (Global) | `MINIMAX_API_KEY` | M2.7, M2.5, M2.1 |
+| MiniMax (China) | `MINIMAX_CN_API_KEY` | Same models, China endpoint |
+| Anthropic | `ANTHROPIC_API_KEY` | Claude Opus 4.7, Claude Sonnet 4.6 |
+| Google | `GOOGLE_API_KEY` | Gemini 3.1 Pro, Gemini 3 Flash |
+| xAI | `XAI_API_KEY` | Grok 4.20, Grok 4 |
+| OpenRouter | `OPENROUTER_API_KEY` | Multi-model gateway |
+| Xiaomi Mimo | `OPENAI_API_KEY` | Via OpenAI-compatible API |
+| Ollama | *(local)* | Qwen3, GLM-4.7-Flash, etc. |
+
+</details>
+
+**② Model & behavior** — override defaults via `TRADINGAGENTS_*` variables:
+
+| Variable | Default | Options |
+|----------|---------|---------|
+| `TRADINGAGENTS_LLM_PROVIDER` | `openai` | `openai`, `deepseek`, `qwen`, `qwen-cn`, `glm`, `glm-cn`, `minimax`, `minimax-cn`, `anthropic`, `google`, `xai`, `openrouter`, `ollama` |
+| `TRADINGAGENTS_DEEP_THINK_LLM` | `gpt-5.4` | Model ID for debates & decisions |
+| `TRADINGAGENTS_QUICK_THINK_LLM` | `gpt-5.4-mini` | Model ID for data summarization |
+| `TRADINGAGENTS_OUTPUT_LANGUAGE` | `English` | `English`, `Chinese` |
+| `TRADINGAGENTS_MAX_DEBATE_ROUNDS` | `1` | Bull/Bear debate rounds (max: 3) |
+| `TRADINGAGENTS_MAX_RISK_ROUNDS` | `1` | Risk management debate rounds (max: 3) |
+
+<details>
+<summary><b>Example .env (DeepSeek)</b></summary>
+
 ```bash
-cp .env.example .env
+# ① API Key
+DEEPSEEK_API_KEY=<your-api-key-here>
+
+# ② Model & behavior
+TRADINGAGENTS_LLM_PROVIDER=deepseek
+TRADINGAGENTS_DEEP_THINK_LLM=deepseek-v4-pro
+TRADINGAGENTS_QUICK_THINK_LLM=deepseek-v4-flash
+TRADINGAGENTS_OUTPUT_LANGUAGE=Chinese
+TRADINGAGENTS_MAX_DEBATE_ROUNDS=3
+TRADINGAGENTS_MAX_RISK_ROUNDS=3
 ```
+</details>
 
-### CLI Usage
+### 3. Run
 
-Launch the interactive CLI:
-```bash
-tradingagents          # installed command
-python -m cli.main     # alternative: run directly from source
-```
-You will see a screen where you can select your desired tickers, analysis date, LLM provider, research depth, and more.
-
-<p align="center">
-  <img src="assets/cli/cli_init.png" width="100%" style="display: inline-block; margin: 0 2%;">
-</p>
-
-An interface will appear showing results as they load, letting you track the agent's progress as it runs.
-
-<p align="center">
-  <img src="assets/cli/cli_news.png" width="100%" style="display: inline-block; margin: 0 2%;">
-</p>
-
-<p align="center">
-  <img src="assets/cli/cli_transaction.png" width="100%" style="display: inline-block; margin: 0 2%;">
-</p>
-
-## TradingAgents Package
-
-### Implementation Details
-
-We built TradingAgents with LangGraph to ensure flexibility and modularity. The framework supports multiple LLM providers: OpenAI, Google, Anthropic, xAI, DeepSeek, Qwen (Alibaba DashScope, international and China endpoints), GLM (Zhipu), MiniMax (global + China), OpenRouter, Ollama for local models, and Azure OpenAI for enterprise.
-
-### Python Usage
-
-To use TradingAgents inside your code, you can import the `tradingagents` module and initialize a `TradingAgentsGraph()` object. The `.propagate()` function will return a decision. You can run `main.py`, here's also a quick example:
+Edit `main.py` to set your stock and date:
 
 ```python
-from tradingagents.graph.trading_graph import TradingAgentsGraph
-from tradingagents.default_config import DEFAULT_CONFIG
-
-ta = TradingAgentsGraph(debug=True, config=DEFAULT_CONFIG.copy())
-
-# forward propagate
-_, decision = ta.propagate("NVDA", "2026-01-15")
-print(decision)
+ticker = "002594"       # default: BYD
+trade_date = "2026-05-25"
 ```
 
-`main.py` also saves the full analysis as a structured markdown report and generates investment-bank-grade HTML reports (English + Chinese) to the `reports/` directory. The HTML reports are produced by an LLM summarizing the markdown into a clean, visual layout — not a simple markdown-to-HTML conversion. Run it directly:
+Then run:
 
 ```bash
 uv run python main.py
 ```
 
-You can also adjust the default configuration to set your own choice of LLMs, debate rounds, etc.
+### 4. Get Reports
 
-```python
-from tradingagents.graph.trading_graph import TradingAgentsGraph
-from tradingagents.default_config import DEFAULT_CONFIG
+Reports are saved to `reports/` as Markdown and HTML (English & Chinese).
 
-config = DEFAULT_CONFIG.copy()
-config["llm_provider"] = "openai"        # openai, google, anthropic, xai, deepseek, qwen, qwen-cn, glm, glm-cn, minimax, minimax-cn, openrouter, ollama, azure
-config["deep_think_llm"] = "gpt-5.4"     # Model for complex reasoning
-config["quick_think_llm"] = "gpt-5.4-mini" # Model for quick tasks
-config["max_debate_rounds"] = 2
+<details>
+<summary><b>Example report</b></summary>
 
-ta = TradingAgentsGraph(debug=True, config=config)
-_, decision = ta.propagate("NVDA", "2026-01-15")
-print(decision)
-```
+<p align="center">
+  <img src="reports/example_AAPL.png" width="80%">
+</p>
+</details>
 
-See `tradingagents/default_config.py` for all configuration options.
+---
 
-## Persistence and Recovery
-
-TradingAgents persists two kinds of state across runs.
-
-### Decision log
-
-The decision log is always on. Each completed run appends its decision to `~/.tradingagents/memory/trading_memory.md`. On the next run for the same ticker, TradingAgents fetches the realised return (raw and alpha vs SPY), generates a one-paragraph reflection, and injects the most recent same-ticker decisions plus recent cross-ticker lessons into the Portfolio Manager prompt, so each analysis carries forward what worked and what didn't.
-
-Override the path with `TRADINGAGENTS_MEMORY_LOG_PATH`.
-
-### Checkpoint resume
-
-Checkpoint resume is opt-in via `--checkpoint`. When enabled, LangGraph saves state after each node so a crashed or interrupted run resumes from the last successful step instead of starting over. On a resume run you will see `Resuming from step N for <TICKER> on <date>` in the logs; on a new run you will see `Starting fresh`. Checkpoints are cleared automatically on successful completion.
-
-Per-ticker SQLite databases live at `~/.tradingagents/cache/checkpoints/<TICKER>.db` (override the base with `TRADINGAGENTS_CACHE_DIR`). Use `--clear-checkpoints` to reset all of them before a run.
-
-```bash
-tradingagents analyze --checkpoint           # enable for this run
-tradingagents analyze --clear-checkpoints    # reset before running
-```
-
-```python
-config = DEFAULT_CONFIG.copy()
-config["checkpoint_enabled"] = True
-ta = TradingAgentsGraph(config=config)
-_, decision = ta.propagate("NVDA", "2026-01-15")
-```
-
-## Contributing
-
-We welcome contributions from the community! Whether it's fixing a bug, improving documentation, or suggesting a new feature, your input helps make this project better. If you are interested in this line of research, please consider joining our open-source financial AI research community [Tauric Research](https://tauric.ai/).
-
-Past contributions, including code, design feedback, and bug reports, are credited per release in [`CHANGELOG.md`](CHANGELOG.md).
-
-## Citation
-
-Please reference our work if you find *TradingAgents* provides you with some help :)
-
-```
-@misc{xiao2025tradingagentsmultiagentsllmfinancial,
-      title={TradingAgents: Multi-Agents LLM Financial Trading Framework}, 
-      author={Yijia Xiao and Edward Sun and Di Luo and Wei Wang},
-      year={2025},
-      eprint={2412.20138},
-      archivePrefix={arXiv},
-      primaryClass={q-fin.TR},
-      url={https://arxiv.org/abs/2412.20138}, 
-}
-```
+<p align="center">
+  Built with <a href="https://github.com/TauricResearch/TradingAgents">TradingAgents</a> by Tauric Research
+</p>
