@@ -47,7 +47,7 @@ Task: Read the markdown investment analysis report below. Then produce a SINGLE,
 - Bull/Bear debate: include the key arguments with their supporting reasoning, not just headline points.
 - Risk section: detail each risk factor with context, not just labels.
 - Executive summary: comprehensive overview (5-8 sentences), not a skeleton.
-- Chinese content stays Chinese. English terms (AAPL, RSI, MACD) stay English.
+- ALL content MUST be in English. If the source markdown is Chinese, translate everything into English. Technical terms (AAPL, RSI, MACD) stay as-is.
 - Professional header with ticker + date + rating.
 - Subtle footer with disclaimer.
 
@@ -95,7 +95,8 @@ CN_SYSTEM_PROMPT = """你是高盛级别的中文投行报告设计师。
 - 最终决策：醒目卡片，明确建议
 - 打印友好
 
-纯 HTML + 内联 CSS，单文件。仅允许 Google Fonts @import。只输出完整 HTML，以 <!DOCTYPE html> 开头。"""
+纯 HTML + 内联 CSS，单文件。仅允许 Google Fonts @import。只输出完整 HTML，以 <!DOCTYPE html> 开头。
+- 所有内容必须为中文。若源报告为英文，需翻译为中文。"""
 
 
 def _call_llm(md_content: str, system_prompt: str) -> str:

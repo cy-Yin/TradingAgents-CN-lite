@@ -5,6 +5,15 @@ All notable changes to TradingAgents-CN-lite are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [CN-lite-0.1.1] — 2026-05-31
+
+### Fixed
+
+- **Debate output in debug mode.** The bull/bear and risk debate content was invisible in console output because `stream_mode="values"` made every chunk contain the full state, so the old `elif` chain always hit stale data. Now tracks previous debate state values and only prints when content actually changes.
+- **Structured output validation for mimo-v2.5-pro.** Added `model_validator` to `TraderProposal` and `PortfolioDecision` to coerce `"None"` / `"null"` strings to real `None` for `Optional[float]` fields, preventing Pydantic validation errors.
+- **Chinese rating label parsing.** `parse_rating` now supports Chinese "评级" labels with full-width colon `：`, and prioritizes label lines over scattered rating words in second-pass scan.
+- **HTML report language mismatch.** English HTML report now always outputs English (translating Chinese source if needed), Chinese HTML report always outputs Chinese, regardless of source markdown language.
+
 ## [CN-lite-0.1.0] — 2026-05-27
 
 First release of TradingAgents-CN-lite. Based on [TauricResearch/TradingAgents v0.2.5](https://github.com/TauricResearch/TradingAgents) with A-share market data support added.

@@ -21,7 +21,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 # ---------------------------------------------------------------------------
@@ -137,6 +137,15 @@ class TraderProposal(BaseModel):
         description="Optional sizing guidance, e.g. '5% of portfolio'.",
     )
 
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_none_strings(cls, data):
+        if isinstance(data, dict):
+            for key in ("entry_price", "stop_loss"):
+                if data.get(key) in ("None", "null", ""):
+                    data[key] = None
+        return data
+
 
 def render_trader_proposal(proposal: TraderProposal) -> str:
     """Render a TraderProposal to markdown.
@@ -204,6 +213,15 @@ class PortfolioDecision(BaseModel):
         default=None,
         description="Optional recommended holding period, e.g. '3-6 months'.",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _coerce_none_strings(cls, data):
+        if isinstance(data, dict):
+            for key in ("price_target",):
+                if data.get(key) in ("None", "null", ""):
+                    data[key] = None
+        return data
 
 
 def render_pm_decision(decision: PortfolioDecision) -> str:

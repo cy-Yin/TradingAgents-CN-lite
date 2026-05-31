@@ -407,14 +407,33 @@ class TradingAgentsGraph:
 
         if self.debug:
             trace = []
+            prev_debate_response = ""
+            prev_risk_responses = {"current_aggressive_response": "", "current_conservative_response": "", "current_neutral_response": ""}
             for chunk in self.graph.stream(init_agent_state, **args):
-                if len(chunk["messages"]) == 0:
-                    pass
+                # Detect debate content by checking if current_response changed
+                debate = chunk.get("investment_debate_state", {})
+                current = debate.get("current_response", "")
+                if current and current != prev_debate_response:
+                    print(current)
+                    prev_debate_response = current
                 else:
-                    chunk["messages"][-1].pretty_print()
-                    trace.append(chunk)
-            # Streamed chunks are per-node deltas. Merge them so the returned
-            # state matches what graph.invoke() yields in the non-debug path.
+                    # Check risk debate
+                    risk = chunk.get("risk_debate_state", {})
+                    risk_printed = False
+                    for key in ("current_aggressive_response", "current_conservative_response", "current_neutral_response"):
+                        resp = risk.get(key, "")
+                        if resp and resp != prev_risk_responses.get(key, ""):
+                            print(resp)
+                            prev_risk_responses[key] = resp
+                            risk_printed = True
+                            break
+                    if not risk_printed:
+                        # Regular message output
+                        msgs = chunk.get("messages", [])
+                        if msgs and hasattr(msgs[-1], "pretty_print"):
+                            msgs[-1].pretty_print()
+                trace.append(chunk)
+            # Merge streamed chunks into final state.
             final_state = {}
             for chunk in trace:
                 final_state.update(chunk)
